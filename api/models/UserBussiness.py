@@ -5,7 +5,13 @@ class Bussiness(models.Model):
    name = models.CharField(max_length=100)
    nit = models.CharField(max_length=20)
    address = models.CharField(max_length=100)
+   
+   class Meta:
+        db_table = "bussiness"
 
 class UserBussiness(models.Model):
    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
    bussiness = models.ForeignKey(Bussiness, on_delete=models.DO_NOTHING)
+   
+   class Meta:
+        db_table = "user_bussiness"
