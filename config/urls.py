@@ -16,9 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
+from api.controllers.BussinessController import Bussiness
+from api.controllers.CustomersController import Customers
+from api.controllers.ProvidersController import Providers
+from api.controllers.ProductsController import Products
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(),
+         name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(),
+         name='token_refresh'),
+    path("api/bussiness", Bussiness.as_view(), name="Bussiness"),
+    path("api/bussiness/<int:id>", Bussiness.as_view(), name="Bussiness"),
+    path("api/customer", Customers.as_view(), name="Customers"),
+    path("api/customer/<int:id>", Customers.as_view(), name="Customers"),
+    path("api/provider", Providers.as_view(), name="Providers"),
+    path("api/provider/<int:id>", Providers.as_view(), name="Providers"),
+    path("api/product", Products.as_view(), name="Products"),
+    path("api/product/<int:id>", Products.as_view(), name="Products")
 ]
