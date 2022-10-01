@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import django_on_heroku
 from datetime import timedelta
 from django.conf import settings
 from pathlib import Path
@@ -16,6 +17,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()  # loads the configs from .env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+django_on_heroku.settings(locals())
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
