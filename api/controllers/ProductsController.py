@@ -9,12 +9,15 @@ import json
 class Products(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id):
-        product = {}
-        if (id > 0):
-            product = Product.objects.filter(id=id).values()
-        else:
-            product = Product.objects.values()
+    def get(self, request, id=None, bussiness_id=None):
+        product = None
+        if (id is not None and bussiness_id is not None):
+            if (id == 0):
+                product = Product.objects.filter(
+                    bussiness_id=bussiness_id).values()
+            else:
+                product = Product.objects.filter(
+                    id=id, bussiness_id=bussiness_id).values()
         return Response({"message": 'Product consulted success.', 'product': product})
 
     def post(self, request):
@@ -35,8 +38,10 @@ class Products(APIView):
         )
         return Response({"message": 'Product created success.'})
 
-    def put(self, request, id):
+    def put(self, request, id=None):
         body = json.loads(request.body)
+        if (not id):
+            id = body['id']
         product = Product.objects.get(id=id)
         product.product = body['product'],
         product.description = body['description'],
@@ -49,7 +54,7 @@ class Products(APIView):
         product.save()
         return Response({"message": 'Product updated success.'})
 
-    def delete(self, request, id):
+    def delete(self, request, id, bussiness_id):
         product = Product.objects.get(id=id)
         product.delete()
         return Response({"message": 'Product deleted success.'})
